@@ -50,3 +50,5 @@ const themeArr = [
   }
 ]
 </script>
+
+<style lang="scss" scoped></style>
