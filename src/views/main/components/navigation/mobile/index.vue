@@ -7,7 +7,7 @@
       <!-- 汉堡按钮 -->
       <li
         @click="isOpenPopup = !isOpenPopup"
-        class="z-20 fixed top-0 right-[-1px] h-4 px-1 flex items-center bg-white"
+        class="dark:bg-zinc-900 z-20 fixed top-0 right-[-1px] h-4 px-1 flex items-center bg-white"
       >
         <m-svg-icon class="w-1.5 h-1.5" name="hamburger"></m-svg-icon>
       </li>
@@ -16,17 +16,17 @@
       <li
         ref="sliderTarget"
         :style="sliderStyle"
-        class="absolute h-[22px] bg-zinc-900 rounded-lg duration-200"
+        class="dark:bg-zinc-900 absolute h-[22px] bg-zinc-900 rounded-lg duration-200"
       ></li>
 
       <!-- category item -->
       <li
+        v-for="(item, index) in $store.getters.categorys"
         :class="{
           'text-zinc-100': currentCategoryIndex === index
         }"
         @click="onItemClick(index)"
         :ref="setItemRef"
-        v-for="(item, index) in data"
         :key="item.id"
         class="shrink-0 px-1.5 py-0.5 z-10 duration-200 last:mr-4"
       >
@@ -42,14 +42,7 @@
 <script setup>
 import { onBeforeUpdate, ref, watch } from 'vue'
 import { useScroll } from '@vueuse/core'
-import Menuvue from '@/views/main/components/menu/index.vue'
-
-defineProps({
-  data: {
-    type: Array,
-    required: true
-  }
-})
+import menuVue from '@/views/main/components/menu/index.vue'
 
 // 滑块
 const sliderStyle = ref({

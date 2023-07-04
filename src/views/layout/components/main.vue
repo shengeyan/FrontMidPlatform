@@ -1,6 +1,7 @@
 <template>
-  <div>222</div>
+  <router-view></router-view>
 </template>
+
 
 <script setup></script>
 

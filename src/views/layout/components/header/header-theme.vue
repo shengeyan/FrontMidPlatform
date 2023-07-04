@@ -3,23 +3,24 @@
     <template #reference>
       <m-svg-icon
         name="theme-light"
-        class="guide-theme w-4 h-4 p-1 cursor-pointer rounded-sm duration-200 outline-none hover:bg-zinc-100/60"
-        fillClass="fill-zinc-900"
+        class="dark:hover:bg-zinc-900 guide-theme w-4 h-4 p-1 cursor-pointer rounded-sm duration-200 outline-none hover:bg-zinc-100/60"
+        fillClass="dark:fill-zinc-300 fill-zinc-900"
       ></m-svg-icon>
     </template>
 
     <div class="w-[140px] overflow-hidden">
       <div
-        class="flex items-center p-1 cursor-pointer rounded hover:bg-zinc-100/60"
+        
+        class="dark:hover:bg-zinc-800 flex items-center p-1 cursor-pointer rounded hover:bg-zinc-100/60"
         v-for="item in themeArr"
         :key="item.id"
       >
         <m-svg-icon
           :name="item.icon"
           class="w-1.5 h-1.5 mr-1"
-          fillClass="fill-zinc-900"
+          fillClass="dark:fill-zinc-300 fill-zinc-900"
         ></m-svg-icon>
-        <span class="text-zinc-800 text-sm">{{ item.name }}</span>
+        <span class="dark:text-zinc-300 text-zinc-800 text-sm">{{ item.name }}</span>
       </div>
     </div>
   </m-popover>

@@ -10,7 +10,7 @@
         :style="contentStyle"
         ref="contentTarget"
         v-show="isVisable"
-        class="absolute p-1 z-20 bg-white border rounded-md"
+        class="dark:bg-zinc-900 ... dark:border-zinc-700 absolute p-1 z-20 bg-white border rounded-md"
       >
         <!-- 匿名插槽 -->
         <slot />
