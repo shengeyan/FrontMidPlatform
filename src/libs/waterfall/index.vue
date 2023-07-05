@@ -223,6 +223,15 @@ const increasingHeight = (index) => {
     itemHeights[index] + props.rowSpacing
 }
 
+/**
+ * 在组件销毁时，清除所有的 _style
+ */
+onUnmounted(() => {
+  props.data.forEach((item) => {
+    delete item._style
+  })
+})
+
 // 触发计算
 watch(
   () => props.data,
@@ -233,26 +242,19 @@ watch(
       // 构建高度记录容器
       useColumnHeightObj()
     }
-    if (props.picturePreReading) {
-      waitImgComplate()
-    } else {
-      useItemHeight()
-    }
+    nextTick(() => {
+      if (props.picturePreReading) {
+        waitImgComplate()
+      } else {
+        useItemHeight()
+      }
+    })
   },
   {
     immediate: true,
     deep: true
   }
 )
-
-/**
- * 在组件销毁时，清除所有的 _style
- */
-onUnmounted(() => {
-  props.data.forEach((item) => {
-    delete item._style
-  })
-})
 </script>
 
 <style lang="scss" scoped></style>
