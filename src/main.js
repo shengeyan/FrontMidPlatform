@@ -9,5 +9,10 @@ import 'virtual:svg-icons-register'
 
 import store from './store'
 
+import useTheme from './utils/theme'
+// 初始化主题
+useTheme()
+
+
 useREM()
 createApp(App).use(router).use(mLibs).use(store).mount('#app')

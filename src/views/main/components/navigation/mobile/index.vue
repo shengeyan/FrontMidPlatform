@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white sticky top-0 left-0 z-10">
+  <div class="duration-500 bg-white sticky top-0 left-0 z-10">
     <ul
       :ref="ulTarget"
       class="relative flex overflow-x-auto p-1 text-xs text-zinc-600 overflow-hidden"
