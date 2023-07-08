@@ -13,7 +13,6 @@
       >
         <m-svg-icon
           :name="isOpenCategoty ? 'fold' : 'unfold'"
-          name="unfold"
           class="w-1 h-1"
           fillClass="dark:fill-zinc-300 fill-zinc-900"
         ></m-svg-icon>
@@ -22,9 +21,9 @@
       <li
         :class="{
           'text-zinc-900 bg-zinc-200 dark:bg-zinc-900 dark:text-zinc-300':
-            currentCategoryIndex === index
+            $store.getters.currentCategoryIndex === index
         }"
-        @click="onItemClick(index)"
+        @click="onItemClick(item)"
         v-for="(item, index) in $store.getters.categorys"
         :key="item.id"
         class="dark:text-zinc-500 dark:hover:text-zinc-300 dark:hover:bg-zinc-900 shrink-0 px-1.5 py-0 z-10 duration-200 last:mr-4 text-zinc-900 text-base font-bold h-4 leading-4 cursor-pointer hover:bg-zinc-200 rounded mr-1 mb-1"
@@ -37,6 +36,9 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useStore } from 'vuex'
+
+const store = useStore()
 
 /**
  * 状态切换处理
@@ -49,8 +51,7 @@ const triggerState = () => {
 /**
  * 选中状态处理
  */
-const currentCategoryIndex = ref(0)
-const onItemClick = (index) => {
-  currentCategoryIndex.value = index
+const onItemClick = (item) => {
+  store.commit('app/changeCurrentCategory', item)
 }
 </script>

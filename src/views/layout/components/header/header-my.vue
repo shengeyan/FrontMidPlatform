@@ -2,7 +2,8 @@
   <m-popover class="flex items-center" placement="bottom-left">
     <template #reference>
       <div
-        class="dark:hover:bg-zinc-900 guide-my relative flex items-center p-0.5 rounded-sm cursor-pointer duration-200 outline-none hover:bg-zinc-100"
+        v-if="false"
+        class="guide-my dark:hover:bg-zinc-900 guide-my relative flex items-center p-0.5 rounded-sm cursor-pointer duration-200 outline-none hover:bg-zinc-100"
       >
         <!-- 头像 -->
         <img
@@ -22,9 +23,17 @@
           class="w-1.5 h-1.5 absolute right-[16px] bottom-0"
         ></m-svg-icon>
       </div>
+      <div v-else>
+        <m-button
+          class="guide-my"
+          icon="profile"
+          iconColor="#fff"
+          @click="onToLogin"
+        ></m-button>
+      </div>
     </template>
 
-    <div class="w-[140px] overflow-hidden">
+    <div v-if="false" class="w-[140px] overflow-hidden">
       <div
         class="dark:fill-zinc-800 flex items-center p-1 cursor-pointer rounded hover:bg-zinc-100/60"
         v-for="item in menuArr"
@@ -44,6 +53,10 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
 // 构建 menu 数据源
 const menuArr = [
   {
@@ -65,6 +78,11 @@ const menuArr = [
     path: ''
   }
 ]
+
+// 进入登录
+const onToLogin = () => {
+  router.push('/login')
+}
 </script>
 
 <style lang="scss" scoped></style>

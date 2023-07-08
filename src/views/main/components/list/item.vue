@@ -5,10 +5,12 @@
       :style="{
         backgroundColor: randomRGB()
       }"
+      @click="onToPinsClick"
     >
       <!-- :src="data.photo" -->
       <img
         v-lazy
+        ref="imgTarget"
         class="w-full rounded bg-transparent"
         :src="data.photo"
         :style="{
@@ -33,6 +35,7 @@
           size="small"
           icon="download"
           iconClass="fill-zinc-900 dark:fill-zinc-200"
+          @click="onDownload"
         />
         <m-button
           class="absolute bottom-1.5 right-1.5 bg-zinc-100/70"
@@ -40,6 +43,7 @@
           size="small"
           icon="full"
           iconClass="fill-zinc-900 dark:fill-zinc-200"
+          @click="onImgFullScreen"
         />
       </div>
     </div>
@@ -60,13 +64,67 @@
 
 <script setup>
 import { randomRGB } from '@/utils/color'
-defineProps({
+import { saveAs } from 'file-saver'
+import { message } from '@/libs'
+import { useFullscreen, useElementBounding } from '@vueuse/core'
+import { ref, computed } from 'vue'
+
+const props = defineProps({
   data: {
     type: Object,
     required: true
   },
   width: {
     type: Number
+  }
+})
+
+/**
+ * 下载按钮点击事件
+ */
+const onDownload = () => {
+  // 提示消息
+  message('success', '图片开始下载')
+  // 延迟一段时间执行，可以得到更好的体验
+  setTimeout(() => {
+    /**
+     * 1. 下载的图片链接
+     */
+    saveAs(props.data.photoDownLink)
+  }, 100)
+}
+
+/**
+ * 生成全屏方法
+ */
+const imgTarget = ref(null)
+const { enter: onImgFullScreen } = useFullscreen(imgTarget)
+
+const emits = defineEmits(['click'])
+
+/**
+ * 进入详情点击事件
+ */
+const onToPinsClick = () => {
+  emits('click', {
+    id: props.data.id,
+    localtion: imgContainerCenter.value
+  })
+}
+
+/**
+ * pins 跳转处理，记录图片的中心点（X|Y位置 + 宽|高的一半）
+ */
+const {
+  x: imgContainerX,
+  y: imgContainerY,
+  width: imgContainerWidth,
+  height: imgContainerHeight
+} = useElementBounding(imgTarget)
+const imgContainerCenter = computed(() => {
+  return {
+    translateX: parseInt(imgContainerX.value + imgContainerWidth.value / 2),
+    translateY: parseInt(imgContainerY.value + imgContainerHeight.value / 2)
   }
 })
 </script>
