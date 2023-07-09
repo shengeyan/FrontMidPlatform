@@ -38,3 +38,7 @@ export const CATEGORY_NOMAR_DATA = [
     name: '家居/家装'
   }
 ]
+
+// 登录方式
+export const LOGIN_TYPE_USERNAME = 'username'
+

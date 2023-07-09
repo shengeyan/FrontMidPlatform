@@ -9,6 +9,15 @@ export default [
         name: 'home',
         component: () => import('@/views/main/index.vue')
       },
+      {
+        path: '/profile',
+        name: 'profile',
+        component: () => import('@/views/profile/index.vue'),
+        //只有登录才能进入
+        meta: {
+          user: true
+        }
+      }
     ]
   },
   {
@@ -20,6 +29,13 @@ export default [
     path: '/login',
     name: 'login',
     component: () => import('@/views/login-register/login/index.vue')
-  }
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: () => import('@/views/login-register/register/index.vue')
+  },
+  
+  
   
 ]

@@ -6,8 +6,9 @@
  * @param {*} confirmText 确定按钮文本
  * @returns
  */
-import {h} from 'vue'
+
 import confirmComponent from './index.vue'
+import { h, render } from 'vue'
 
 export const confirm = (
     title,
