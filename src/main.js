@@ -12,6 +12,8 @@ import store from './store'
 import useTheme from './utils/theme'
 
 import  mDirectives from './directives'
+
+import './permission'
 // 初始化主题
 useTheme()
 

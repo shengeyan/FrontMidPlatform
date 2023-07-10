@@ -10,9 +10,13 @@
 
     <img class="" ref="imageTarget" :src="blob" />
 
-    <m-button class="mt-4 w-[80%] xl:w-1/2" @click="onConfirmClick"
-      >确定</m-button
+    <m-button
+      class="mt-4 w-[80%] xl:w-1/2"
+      @click="onConfirmClick"
+      :loading="loading"
     >
+      确定
+    </m-button>
   </div>
 </template>
 
@@ -25,6 +29,10 @@ import { isMobileTerminal } from '@/utils/flexible'
 import Cropper from 'cropperjs'
 import 'cropperjs/dist/cropper.css'
 import { onMounted, ref } from 'vue'
+import { getOSSClient } from '@/utils/sts'
+import { message } from '@/libs'
+import { useStore } from 'vuex'
+import { putProfile } from '@/api/sys'
 
 // 移动端配置对象
 const mobileOptions = {
@@ -77,12 +85,12 @@ const emits = defineEmits([EMITS_CLOSE])
  */
 const loading = ref(false)
 const onConfirmClick = () => {
-  // 开启 loading
   loading.value = true
   // 获取裁剪后的图片
   cropper.getCroppedCanvas().toBlob((blob) => {
     // 裁剪后的 blob 地址
-    console.log(URL.createObjectURL(blob))
+    // console.log(URL.createObjectURL(blob))
+    putObjectToOSS(blob)
   })
 }
 
@@ -91,5 +99,48 @@ const onConfirmClick = () => {
  */
 const close = () => {
   emits(EMITS_CLOSE)
+}
+
+/**
+ * 进行 OSS 上传
+ */
+let ossClient = null
+let store = useStore()
+const putObjectToOSS = async (file) => {
+  if (!ossClient) {
+    ossClient = await getOSSClient()
+  }
+  try {
+    // 因为当前凭证只具备 images 文件夹下的访问权限，所以图片需要上传到 images/xxx.xx 。否则你将得到一个 《AccessDeniedError: You have no right to access this object because of bucket acl.》 的错误
+    const fileTypeArr = file.type.split('/')
+    const fileName = `${store.getters.userInfo.username}/${Date.now()}.${
+      fileTypeArr[fileTypeArr.length - 1]
+    }`
+    // 文件存放路径，文件
+    const res = await ossClient.put(`images/${fileName}`, file)
+    // TODO：图片上传成功
+    onChangeProfile(res.url)
+  } catch (e) {
+    message('error', e)
+  }
+}
+
+/**
+ * 上传新头像到服务器
+ */
+const onChangeProfile = async (avatar) => {
+  // 更新本地数据
+  store.commit('user/setUserInfo', {
+    ...store.getters.userInfo,
+    avatar
+  })
+  // 更新服务器数据
+  await putProfile(store.getters.userInfo)
+  // 通知用户
+  message('success', '用户头像修改成功')
+  // 关闭 loading
+  loading.value = false
+  // 关闭 dialog
+  close()
 }
 </script>
