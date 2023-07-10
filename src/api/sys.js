@@ -41,6 +41,16 @@ export const registerUser = (data) => {
     data
   })
 }
+/**
+ * 修改用户信息
+ */
+export const putProfile = (data) => {
+  return request({
+    url: '/user/profile',
+    method: 'PUT',
+    data
+  })
+}
 
 
   
