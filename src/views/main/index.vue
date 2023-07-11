@@ -51,7 +51,7 @@ import { isMobileTerminal } from '@/utils/flexible'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { useScroll } from '@vueuse/core'
-
+import { ref ,onActivated} from 'vue'
 
 const store = useStore()
 const router = useRouter()
@@ -71,7 +71,11 @@ const onMyClick = () => {
 /**
  * vip按钮
  */
-const onVipClick = () => {}
+const onVipClick = () => {
+  // 移动端跳转
+  store.commit('app/changeRouterType', 'push')
+  router.push('/member')
+}
 
 /**
  * 记录页面滚动位置
