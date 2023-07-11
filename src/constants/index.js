@@ -46,3 +46,5 @@ export const LOGIN_TYPE_USERNAME = 'username'
 export const REGION = 'oss-cn-beijing'
 export const BUCKET = 'imooc-front'
 
+// export const REGION = 'oss-cn-chengdu'
+// export const BUCKET = 'shen-geyan'

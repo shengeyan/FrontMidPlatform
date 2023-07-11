@@ -90,6 +90,7 @@ const props = defineProps({
  */
 const router = useRouter()
 const onPop = () => {
+  store.commit('app/changeRouterType', 'back')
   router.back()
 }
 

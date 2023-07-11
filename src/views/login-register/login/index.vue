@@ -139,6 +139,7 @@ const loginForm = ref({
 
 //注册
 const onToReg = () => {
+  store.commit('app/changeRouterType', 'push')
   router.push('/register')
 }
 </script>
