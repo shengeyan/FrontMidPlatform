@@ -27,7 +27,7 @@ export default defineConfig({
       '/api': {
         // 代理请求之后的请求地址
         // target: 'https://api.imooc-front.lgdsunday.club/',
-        target: 'http://43.153.134.137/:3000',
+        target: 'http://43.153.134.137:3000',
         // 跨域
         changeOrigin: true
       }
