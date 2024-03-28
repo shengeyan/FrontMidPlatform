@@ -19,25 +19,25 @@ service.interceptors.response.use((response) => {
   }
   return Promise.reject(new Error(message))
 },
-(error) => {
-  // 处理 token 超时问题
-  if (
-    error.response &&
-    error.response.data &&
-    error.response.data.code === 401
-  ) {
-    // TODO: token超时
-    store.dispatch('user/logout')
+  (error) => {
+    // 处理 token 超时问题
+    if (
+      error.response &&
+      error.response.data &&
+      error.response.data.code === 401
+    ) {
+      // TODO: token超时
+      store.dispatch('user/logout')
+    }
+    // TODO: 提示错误消息
+    return Promise.reject(error)
   }
-  // TODO: 提示错误消息
-  return Promise.reject(error)
-}
 )
 
 /*icode权限*/
 service.interceptors.request.use((config) => {
   // 添加 icode
-  config.headers.icode = '85B37A6B72047496'
+  config.headers.icode = '1762FB25D76D1A29'
   // 必须返回 config
   return config
 })
